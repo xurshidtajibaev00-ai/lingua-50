@@ -7,139 +7,232 @@
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;padding:20px;
+ margin:0;padding:18px;color:white;
  font-family:Arial,sans-serif;
- color:white;
  background:linear-gradient(140deg,#101329,#21164a,#101329);
 }
-h1{text-align:center;color:#a98cff}
-p{text-align:center;color:#c8c4e8}
+header{text-align:center;padding:15px}
+h1{color:#b69aff;margin-bottom:5px}
+header p{color:#c9c4e8}
+nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px;margin:auto}
+button{
+ border:0;border-radius:12px;padding:13px;
+ background:linear-gradient(90deg,#8055ff,#d34bff);
+ color:white;font-size:15px;cursor:pointer;
+}
+nav button{font-weight:bold}
+.page{display:none;max-width:600px;margin:20px auto}
+.page.active{display:block}
 .card{
- max-width:600px;margin:20px auto;
- padding:18px;border-radius:18px;
- background:#ffffff12;
- border:1px solid #ffffff20;
+ padding:17px;margin:12px 0;border-radius:17px;
+ background:#ffffff12;border:1px solid #ffffff22;
+}
+h2{color:#c3aaff}
+input{
+ width:100%;padding:14px;border:0;
+ border-radius:12px;font-size:16px;margin:10px 0;
 }
 .word{
- display:flex;justify-content:space-between;
- align-items:center;gap:10px;
- padding:13px 5px;border-bottom:1px solid #ffffff20;
+ display:flex;align-items:center;
+ justify-content:space-between;gap:10px;
+ padding:13px 3px;border-bottom:1px solid #ffffff20;
 }
-.ru{font-size:20px;font-weight:bold}
+.ru{font-size:19px;font-weight:bold}
 .uz{color:#c9c4e8;margin-top:5px}
-button{
- border:0;border-radius:12px;padding:12px;
- background:linear-gradient(90deg,#8055ff,#d34bff);
- color:white;font-size:16px;cursor:pointer;
-}
-#search{
- width:100%;padding:14px;border-radius:12px;
- border:0;margin-top:15px;font-size:16px;
-}
+.audio{min-width:48px}
+.answer{display:block;width:100%;margin:8px 0}
 .small{font-size:13px;color:#aaa}
+.back{background:#393052;margin-bottom:10px}
 </style>
 </head>
 <body>
 
+<header>
 <h1>🚀 LINGUA 50</h1>
-<p>Bugungi 50 ta ruscha so‘z</p>
+<p>Rus tilini har kuni o‘rganing!</p>
+</header>
 
+<nav>
+<button onclick="showPage('words')">📚 50 ta so‘z</button>
+<button onclick="showPage('videos')">🎬 Video dars</button>
+<button onclick="showPage('tests')">📝 Test</button>
+<button onclick="showPage('results')">🏆 Natijalar</button>
+</nav>
+
+<section id="words" class="page active">
 <div class="card">
+<h2>📚 Bugungi 50 ta so‘z</h2>
+<p>Ruscha so‘zni tinglang va tarjimasini o‘rganing.</p>
 <input id="search" placeholder="🔍 So‘z qidirish..." oninput="searchWords()">
-<div id="words"></div>
-<p class="small">🔊 Tugmani bosib ruscha talaffuzni eshiting</p>
+<div id="wordList"></div>
 </div>
+</section>
+
+<section id="videos" class="page">
+<div class="card">
+<h2>🎬 Video darslar</h2>
+<p>Qisqa 10–15 soniyalik roliklar orqali rus tilini o‘rganamiz.</p>
+<div class="card">
+<h3>🎞 Kundalik suhbatlar</h3>
+<p>Salomlashish va tanishish</p>
+<p class="small">Roliklar tayyorlanmoqda.</p>
+</div>
+<div class="card">
+<h3>🎬 Kinolardan lavhalar</h3>
+<p>Qisqa lavhalar va yangi so‘zlar</p>
+<p class="small">Roliklar tayyorlanmoqda.</p>
+</div>
+<div class="card">
+<h3>🐻 Multfilmlar</h3>
+<p>Multfilmlar orqali rus tilini o‘rganish</p>
+<p class="small">Roliklar tayyorlanmoqda.</p>
+</div>
+</div>
+</section>
+
+<section id="tests" class="page">
+<div class="card">
+<h2>📝 Rus tili testi</h2>
+<p id="question">«Спасибо» so‘zining tarjimasi nima?</p>
+<button class="answer" onclick="checkAnswer(this,false)">Salom</button>
+<button class="answer" onclick="checkAnswer(this,true)">Rahmat</button>
+<button class="answer" onclick="checkAnswer(this,false)">Xayr</button>
+<p id="feedback"></p>
+<button onclick="nextQuestion()">Keyingi savol ➜</button>
+</div>
+</section>
+
+<section id="results" class="page">
+<div class="card">
+<h2>🏆 Mening natijalarim</h2>
+<p>To‘g‘ri javoblar: <b id="score">0</b></p>
+<p>O‘tilgan testlar: <b id="done">0</b></p>
+<p>O‘rganilgan so‘zlar: <b>50 ta</b></p>
+</div>
+</section>
 
 <script>
-const data = [
-["Привет","Salom"],
-["Здравствуйте","Assalomu alaykum"],
-["Спасибо","Rahmat"],
-["Пожалуйста","Iltimos"],
-["Да","Ha"],
-["Нет","Yo‘q"],
-["Хорошо","Yaxshi"],
-["Плохо","Yomon"],
-["Дом","Uy"],
-["Школа","Maktab"],
-["Работа","Ish"],
-["Друг","Do‘st"],
-["Семья","Oila"],
-["Мама","Ona"],
-["Папа","Ota"],
-["Брат","Aka yoki uka"],
-["Сестра","Opa yoki singil"],
-["Вода","Suv"],
-["Хлеб","Non"],
-["Молоко","Sut"],
-["Еда","Ovqat"],
-["Книга","Kitob"],
-["Телефон","Telefon"],
-["Машина","Mashina"],
-["Город","Shahar"],
-["Улица","Ko‘cha"],
-["День","Kun"],
-["Ночь","Tun"],
-["Утро","Ertalab"],
-["Вечер","Kechqurun"],
-["Сегодня","Bugun"],
-["Завтра","Ertaga"],
-["Вчера","Kecha"],
-["Любовь","Sevgi"],
-["Жизнь","Hayot"],
-["Счастье","Baxt"],
-["Красивый","Chiroyli"],
-["Большой","Katta"],
-["Маленький","Kichkina"],
-["Новый","Yangi"],
-["Старый","Eski"],
-["Говорить","Gapirmoq"],
-["Слушать","Tinglamoq"],
-["Читать","O‘qimoq"],
-["Писать","Yozmoq"],
-["Учиться","O‘qimoq, ta'lim olmoq"],
-["Работать","Ishlamoq"],
-["Идти","Bormoq"],
-["Любить","Sevmoq"],
-["Понимать","Tushunmoq"]
+const words=[
+["Привет","Salom"],["Здравствуйте","Assalomu alaykum"],
+["Спасибо","Rahmat"],["Пожалуйста","Iltimos"],
+["Да","Ha"],["Нет","Yo‘q"],["Хорошо","Yaxshi"],
+["Плохо","Yomon"],["Дом","Uy"],["Школа","Maktab"],
+["Работа","Ish"],["Друг","Do‘st"],["Семья","Oila"],
+["Мама","Ona"],["Папа","Ota"],["Брат","Aka yoki uka"],
+["Сестра","Opa yoki singil"],["Вода","Suv"],
+["Хлеб","Non"],["Молоко","Sut"],["Еда","Ovqat"],
+["Книга","Kitob"],["Телефон","Telefon"],
+["Машина","Mashina"],["Город","Shahar"],
+["Улица","Ko‘cha"],["День","Kun"],["Ночь","Tun"],
+ ["Утро","Ertalab"],["Вечер","Kechqurun"],
+["Сегодня","Bugun"],["Завтра","Ertaga"],
+["Вчера","Kecha"],["Любовь","Sevgi"],
+["Жизнь","Hayot"],["Счастье","Baxt"],
+["Красивый","Chiroyli"],["Большой","Katta"],
+["Маленький","Kichkina"],["Новый","Yangi"],
+["Старый","Eski"],["Говорить","Gapirmoq"],
+["Слушать","Tinglamoq"],["Читать","O‘qimoq"],
+["Писать","Yozmoq"],["Учиться","Ta'lim olmoq"],
+["Работать","Ishlamoq"],["Идти","Bormoq"],
+["Любить","Sevmoq"],["Понимать","Tushunmoq"]
 ];
 
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+}
+
 function speak(word){
- const msg = new SpeechSynthesisUtterance(word);
- msg.lang = "ru-RU";
- msg.rate = 0.85;
- const voices = speechSynthesis.getVoices();
- const female = voices.find(v =>
-   v.lang.toLowerCase().startsWith("ru") &&
-   /female|жен|milena|irina/i.test(v.name)
- );
- if(female) msg.voice = female;
+ if(!("speechSynthesis" in window)){
+  alert("Telefoningizda ovozli o‘qish qo‘llab-quvvatlanmaydi.");
+  return;
+ }
  speechSynthesis.cancel();
+ const msg=new SpeechSynthesisUtterance(word);
+ msg.lang="ru-RU";
+ msg.rate=0.85;
+ const voices=speechSynthesis.getVoices();
+ const russian=voices.filter(v=>v.lang.toLowerCase().startsWith("ru"));
+ const female=russian.find(v=>/female|жен|milena|irina/i.test(v.name));
+ if(female) msg.voice=female;
+ else if(russian.length) msg.voice=russian[0];
  speechSynthesis.speak(msg);
 }
 
-function showWords(list){
- const box = document.getElementById("words");
- box.innerHTML = "";
- list.forEach((item,i)=>{
-  box.innerHTML += 
-   <div class="word">
-    <div>
-     <div class="ru">${i+1}. ${item[0]}</div>
-     <div class="uz">${item[1]}</div>
-    </div>
-    <button onclick="speak('${item[0]}')">🔊</button>
-   </div>;
+function renderWords(list){
+ const box=document.getElementById("wordList");
+ box.innerHTML="";
+ list.forEach((item)=>{
+  const row=document.createElement("div");
+  row.className="word";
+  const info=document.createElement("div");
+  const ru=document.createElement("div");
+  ru.className="ru";
+  ru.textContent=item[0];
+  const uz=document.createElement("div");
+  uz.className="uz";
+  uz.textContent=item[1];
+  info.append(ru,uz);
+  const btn=document.createElement("button");
+  btn.className="audio";
+  btn.textContent="🔊";
+  btn.onclick=()=>speak(item[0]);
+  row.append(info,btn);
+  box.append(row);
  });
 }
+
 function searchWords(){
- const q=document.getElementById("search").value.toLowerCase();
- showWords(data.filter(x =>
-  x[0].toLowerCase().includes(q) ||
-  x[1].toLowerCase().includes(q)
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ renderWords(words.filter(w=>
+  w[0].toLowerCase().includes(q)||
+  w[1].toLowerCase().includes(q)
  ));
 }
-showWords(data);
+
+let score=0;
+let done=0;
+let current=0;
+const questions=[
+{q:"«Спасибо» so‘zining tarjimasi nima?",a:["Salom","Rahmat","Xayr"],correct:1},
+{q:"«Дом» so‘zining tarjimasi nima?",a:["Uy","Suv","Kitob"],correct:0},
+{q:"«Вода» so‘zining tarjimasi nima?",a:["Non","Suv","Ona"],correct:1},
+{q:"«Друг» so‘zining tarjimasi nima?",a:["Do‘st","Ota","Ish"],correct:0},
+{q:"«Любовь» so‘zining tarjimasi nima?",a:["Baxt","Hayot","Sevgi"],correct:2}
+];
+
+function loadQuestion(){
+ const q=questions[current];
+ document.getElementById("question").textContent=q.q;
+ const buttons=document.querySelectorAll(".answer");
+ buttons.forEach((b,i)=>{
+  b.textContent=q.a[i];
+  b.disabled=false;
+ });
+ document.getElementById("feedback").textContent="";
+}
+
+function checkAnswer(btn,correct){
+ if(document.querySelector(".answer:disabled"))return;
+ done++;
+ if(correct){
+  score++;
+  document.getElementById("feedback").textContent="✅ To‘g‘ri javob!";
+ }else{
+  document.getElementById("feedback").textContent="❌ Noto‘g‘ri javob. Keyingisini sinab ko‘ring!";
+ }
+ document.querySelectorAll(".answer").forEach(b=>b.disabled=true);
+ document.getElementById("score").textContent=score;
+ document.getElementById("done").textContent=done;
+}
+
+function nextQuestion(){
+ current=(current+1)%questions.length;
+ loadQuestion();
+}
+
+renderWords(words);
+loadQuestion();
 </script>
 </body>
 </html>
