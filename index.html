@@ -13,7 +13,6 @@
       --text: #1f2937;
       --muted: #6b7280;
 
-      /* Duolingo uslubidagi ranglar + pastki 3D soya ranglari */
       --green: #58cc02;
       --green-dark: #46a302;
 
@@ -25,9 +24,6 @@
 
       --amber: #ffc800;
       --amber-dark: #d99b00;
-
-      --red: #ff4b4b;
-      --red-dark: #d42c2c;
     }
 
     * {
@@ -40,7 +36,7 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      padding-bottom: 88px; /* Pastki menyu ostida qolmasligi uchun */
+      padding-bottom: 92px;
     }
 
     .app {
@@ -70,9 +66,9 @@
 
     .stats {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13.5px;
     }
 
     .stat-pill {
@@ -83,6 +79,11 @@
       border-radius: 10px;
       background: #ffffff;
       border: 1.5px solid var(--border);
+      transition: transform 0.2s ease;
+    }
+
+    .stat-pill.bump {
+      transform: scale(1.15);
     }
 
     /* Piko + Nutq pufakchasi */
@@ -94,22 +95,30 @@
     }
 
     .mascot-wrap {
-      flex: 0 0 96px;
+      flex: 0 0 100px;
       display: flex;
       justify-content: center;
     }
 
-    .mascot {
-      width: 92px;
-      height: 92px;
-      object-fit: contain;
-      animation: pikoFloat 2.8s ease-in-out infinite;
+    .mascot-btn {
+      padding: 0;
+      border: none;
+      background: transparent;
       cursor: pointer;
       user-select: none;
+      animation: pikoFloat 2.8s ease-in-out infinite;
     }
 
-    .mascot.bounce {
+    .mascot-btn.bounce {
       animation: pikoBounce 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .mascot-img {
+      width: 96px;
+      height: 96px;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.09));
     }
 
     @keyframes pikoFloat {
@@ -119,8 +128,8 @@
 
     @keyframes pikoBounce {
       0% { transform: scale(1) translateY(0); }
-      40% { transform: scale(1.08, 0.92) translateY(-8px); }
-      75% { transform: scale(0.96, 1.04) translateY(1px); }
+      35% { transform: scale(1.1, 0.9) translateY(-9px); }
+      70% { transform: scale(0.95, 1.05) translateY(1px); }
       100% { transform: scale(1) translateY(0); }
     }
 
@@ -130,19 +139,18 @@
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: 18px;
-      padding: 14px 16px;
+      padding: 13px 15px;
       box-shadow: 0 3px 0 var(--border);
     }
 
-    /* Nutq pufakchasi "dumchasi" */
     .bubble::before {
       content: "";
       position: absolute;
-      left: -10px;
+      left: -9px;
       top: 50%;
       transform: translateY(-50%) rotate(45deg);
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       background: var(--surface);
       border-left: 2px solid var(--border);
       border-bottom: 2px solid var(--border);
@@ -150,19 +158,22 @@
 
     .bubble-title {
       margin: 0 0 4px;
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 800;
     }
 
     .bubble-sub {
-      margin: 0 0 12px;
-      font-size: 13.5px;
+      margin: 0 0 11px;
+      font-size: 13px;
       color: var(--muted);
       line-height: 1.35;
+      min-height: 35px;
     }
 
     /* Duolingo 3D bosma tugma */
     .duo-btn {
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -176,9 +187,10 @@
       user-select: none;
       transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
     }
-   .duo-btn--sm {
+
+    .duo-btn--sm {
       padding: 9px 14px;
-      font-size: 13.5px;
+      font-size: 13px;
       border-radius: 12px;
     }
 
@@ -201,6 +213,8 @@
     }
 
     .duo-card {
+      position: relative;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -217,11 +231,37 @@
       transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
     }
 
+    .duo-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.24),
+        transparent
+      );
+      transform: skewX(-20deg);
+      transition: left 0.45s ease;
+      pointer-events: none;
+    }
+
+    .duo-card:active::after {
+      left: 140%;
+    }
+
     .duo-card .icon {
       font-size: 32px;
       line-height: 1;
       margin-bottom: 10px;
-      transition: transform 0.15s ease;
+      transition: transform 0.14s ease;
+    }
+
+    .duo-card:active .icon {
+      transform: scale(1.12);
     }
 
     .duo-card .card-title {
@@ -233,7 +273,7 @@
     .duo-card .card-sub {
       font-size: 12.5px;
       font-weight: 600;
-      opacity: 0.94;
+      opacity: 0.95;
     }
 
     .duo-card--green {
@@ -287,7 +327,7 @@
       justify-content: space-between;
       align-items: center;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13.5px;
       margin-bottom: 10px;
     }
 
@@ -301,12 +341,11 @@
 
     .progress-fill {
       height: 100%;
-      width: 0%;
+      width: 24%;
       background: var(--green);
       border-radius: 999px;
       transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
-
     /* Pastki navigatsiya paneli */
     .bottom-nav {
       position: fixed;
@@ -351,7 +390,8 @@
       background: #e6f7ff;
       border-color: #90dcff;
     }
-   .nav-btn:active .nav-icon {
+
+    .nav-btn:active .nav-icon {
       transform: translateY(-2px) scale(0.95);
     }
   </style>
@@ -362,27 +402,27 @@
     <header class="topbar">
       <div class="brand">🇷🇺 LINGUA 50</div>
       <div class="stats">
-        <span class="stat-pill">⭐ <span id="xpVal">250</span></span>
-        <span class="stat-pill">❤️ <span id="hpVal">5</span></span>
-        <span class="stat-pill">🔥 <span id="streakVal">3</span></span>
+        <span class="stat-pill" id="xpPill">⭐ <span id="xpVal">250</span></span>
+        <span class="stat-pill" id="hpPill">❤️ <span id="hpVal">5</span></span>
+        <span class="stat-pill" id="streakPill">🔥 <span id="streakVal">3</span></span>
       </div>
     </header>
 
     <!-- Piko va nutq pufakchasi -->
     <section class="hero">
       <div class="mascot-wrap">
-        <!-- O'zingizdagi Piko rasm manzilini qo'ying -->
-        <img
-          id="pikoImg"
-          class="mascot"
-          src="piko.png"
-          alt="Piko"
-        />
+        <button id="pikoBtn" class="mascot-btn" type="button" aria-label="Piko">
+          <img
+            class="mascot-img"
+            alt="Piko"
+            src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpath d='M36 84 L16 108 L33 106 L46 88 Z' fill='%232563eb' stroke='%231e3a8a' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M42 86 L28 112 L42 108 L52 90 Z' fill='%23ef4444' stroke='%23991b1b' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cellipse cx='62' cy='72' rx='26' ry='31' fill='%2322c55e' stroke='%2315803d' stroke-width='3'/%3E%3Cellipse cx='70' cy='76' rx='15' ry='21' fill='%2386efac'/%3E%3Cpath d='M44 58 C28 65, 30 87, 50 88 C57 79, 55 66, 44 58 Z' fill='%2316a34a' stroke='%2314532d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M42 74 C33 78, 35 87, 49 88' fill='%23ef4444'/%3E%3Ccircle cx='68' cy='37' r='22' fill='%2322c55e' stroke='%2315803d' stroke-width='3'/%3E%3Cpath d='M52 20 C58 14, 74 14, 82 22 C74 26, 60 26, 52 20 Z' fill='%23ef4444'/%3E%3Ccircle cx='75' cy='33' r='7.5' fill='%23ffffff' stroke='%23111827' stroke-width='2.2'/%3E%3Ccircle cx='77.5' cy='33' r='3.8' fill='%23111827'/%3E%3Ccircle cx='79' cy='31' r='1.4' fill='%23ffffff'/%3E%3Cpath d='M86 33 C100 33, 102 44, 89 46 C94 50, 89 55, 83 49 Z' fill='%23facc15' stroke='%23ca8a04' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cpath d='M54 102 L49 113 M49 113 L43 113 M49 113 L53 114' stroke='%234b5563' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M72 102 L72 113 M72 113 L67 113 M72 113 L77 114' stroke='%234b5563' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E"
+          />
+        </button>
       </div>
 
       <div class="bubble">
         <h2 class="bubble-title">Salom! Men Piko!</h2>
-        <p class="bubble-sub">Bugun 50 ta soʻz oʻrganamizmi?</p>
+        <p id="pikoText" class="bubble-sub">Bugun 50 ta soʻz oʻrganamizmi?</p>
         <button id="startBtn" class="duo-btn duo-btn--sm duo-btn--green" type="button">
           Ha, boshlaymiz! ▶
         </button>
@@ -396,7 +436,6 @@
         <span class="card-title">Bosh sahifa</span>
         <span class="card-sub">Asosiy sahifa</span>
       </button>
-
       <button class="duo-card duo-card--blue" data-tab="words" type="button">
         <span class="icon">📖</span>
         <span class="card-title">Soʻzlar</span>
@@ -423,7 +462,7 @@
         <span id="goalText">12 / 50 soʻz</span>
       </div>
       <div class="progress-track">
-        <div id="progressFill" class="progress-fill" style="width: 24%;"></div>
+        <div id="progressFill" class="progress-fill"></div>
       </div>
     </section>
   </div>
@@ -461,31 +500,53 @@
       }
     }
 
-    // Piko bosilganda sakrashi
-    const pikoImg = document.getElementById("pikoImg");
-    pikoImg.addEventListener("click", () => {
+    function bumpStat(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove("bump");
+      void el.offsetWidth;
+      el.classList.add("bump");
+    }
+
+    // Piko bosilganda sakrashi va gap almashtirishi
+    const pikoBtn = document.getElementById("pikoBtn");
+    const pikoText = document.getElementById("pikoText");
+    const phrases = [
+      "Bugun 50 ta soʻz oʻrganamizmi?",
+      "Давай! Har kuni oz-ozdan — zoʻr natija!",
+      "Xato qilsang ham qoʻrqma, men yoningdaman!",
+      "Ketma-ket 3 kun — super! Davom etamiz!"
+    ];
+    let phraseIndex = 0;
+
+    pikoBtn.addEventListener("click", () => {
       vibrate("medium");
-      pikoImg.classList.remove("bounce");
-      void pikoImg.offsetWidth; // qayta ishga tushirish uchun
-      pikoImg.classList.add("bounce");
+      pikoBtn.classList.remove("bounce");
+      void pikoBtn.offsetWidth;
+      pikoBtn.classList.add("bounce");
+
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      pikoText.textContent = phrases[phraseIndex];
     });
 
-    // "Ha, boshlaymiz!" tugmasi — progressni sinash uchun misol
+    // "Ha, boshlaymiz!" tugmasi
     let learnedWords = 12;
     const targetWords = 50;
     const progressFill = document.getElementById("progressFill");
     const goalText = document.getElementById("goalText");
     const xpVal = document.getElementById("xpVal");
-   document.getElementById("startBtn").addEventListener("click", () => {
+
+    document.getElementById("startBtn").addEventListener("click", () => {
       vibrate("medium");
       learnedWords = Math.min(targetWords, learnedWords + 5);
       const pct = Math.round((learnedWords / targetWords) * 100);
       progressFill.style.width = pct + "%";
       goalText.textContent = ${learnedWords} / ${targetWords} soʻz;
       xpVal.textContent = Number(xpVal.textContent) + 10;
+      bumpStat("xpPill");
     });
 
-    // Tab almashish (2x2 kartochkalar va pastki menyu)
+    // Tab almashish
     const navButtons = document.querySelectorAll(".nav-btn");
     const cards = document.querySelectorAll(".duo-card");
 
@@ -494,14 +555,12 @@
       navButtons.forEach((btn) => {
         btn.classList.toggle("is-active", btn.dataset.tab === tabName);
       });
-      // Bu yerda o'zingizning sahifa/bo'lim ko'rsatish funksiyangizni chaqiring
       console.log("Tanlangan bo'lim:", tabName);
     }
 
     cards.forEach((card) => {
       card.addEventListener("click", () => setActiveTab(card.dataset.tab));
     });
-
     navButtons.forEach((btn) => {
       btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
     });
