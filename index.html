@@ -2,148 +2,144 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LINGUA 50</title>
 <style>
 *{box-sizing:border-box}
 body{
  margin:0;padding:20px;
- background:linear-gradient(145deg,#10152c,#211638);
- color:white;font-family:Arial,sans-serif;
+ font-family:Arial,sans-serif;
+ color:white;
+ background:linear-gradient(140deg,#101329,#21164a,#101329);
 }
-header{display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:24px;font-weight:bold;color:#c4a4ff}
-h1{margin-top:35px}
-p{color:#c2bfd1;line-height:1.5}
-.stats{display:flex;gap:10px;margin:20px 0}
-.stat,.card{
- background:#292541;border-radius:18px;padding:17px;
+h1{text-align:center;color:#a98cff}
+p{text-align:center;color:#c8c4e8}
+.card{
+ max-width:600px;margin:20px auto;
+ padding:18px;border-radius:18px;
+ background:#ffffff12;
+ border:1px solid #ffffff20;
 }
-.stat{flex:1;text-align:center}
-.stat strong{display:block;font-size:23px;color:#71e5ff}
-.card{margin:14px 0}
-.hero{background:linear-gradient(120deg,#5935a5,#176a91)}
+.word{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:10px;
+ padding:13px 5px;border-bottom:1px solid #ffffff20;
+}
+.ru{font-size:20px;font-weight:bold}
+.uz{color:#c9c4e8;margin-top:5px}
 button{
- border:0;border-radius:14px;padding:15px;
- color:white;font-size:15px;font-weight:bold;
- background:linear-gradient(100deg,#8956f5,#16b9d3);
- cursor:pointer;transition:.2s;
+ border:0;border-radius:12px;padding:12px;
+ background:linear-gradient(90deg,#8055ff,#d34bff);
+ color:white;font-size:16px;cursor:pointer;
 }
-button:active{transform:scale(.96)}
-.full{width:100%}
-.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.menu button{min-height:105px;background:#332b50}
-.menu button:hover{background:#59417f}
-.page{display:none}
-.page.active{display:block}
-.back{margin:20px 0;background:#39334f}
-.item{background:#292541;padding:16px;border-radius:15px;margin:12px 0}
-.word{font-size:22px;font-weight:bold;color:#82e8ff}
-.small{font-size:13px;color:#bbb}
+#search{
+ width:100%;padding:14px;border-radius:12px;
+ border:0;margin-top:15px;font-size:16px;
+}
+.small{font-size:13px;color:#aaa}
 </style>
 </head>
 <body>
 
-<header>
- <div class="logo">LINGUA 50 ✨</div>
- <div>👤</div>
-</header>
+<h1>🚀 LINGUA 50</h1>
+<p>Bugungi 50 ta ruscha so‘z</p>
 
-<!-- BOSH SAHIFA -->
-<section id="home" class="page active">
- <h1>Привет! 👋</h1>
- <p>Rus tilini biz bilan oson o‘rganing!</p>
-
- <div class="stats">
-  <div class="stat"><strong>🔥 0</strong><small>Kunlik seriya</small></div>
-  <div class="stat"><strong>⭐ 0</strong><small>Ballar</small></div>
- </div>
-
- <div class="card hero">
-  <h2>📚 Bugungi dars</h2>
-  <p>Bugun 50 ta yangi so‘z o‘rganishga tayyormisiz?</p>
-  <button class="full" onclick="showPage('words')">Darsni boshlash 🚀</button>
- </div>
-
- <h2>O‘rganish bo‘limlari</h2>
- <div class="menu">
-  <button onclick="showPage('words')">📚<br>So‘zlar</button>
-  <button onclick="showPage('videos')">🎬<br>Video dars</button>
-  <button onclick="showPage('tests')">📝<br>Testlar</button>
-  <button onclick="showPage('results')">🏆<br>Yutuqlar</button>
- </div>
-</section>
-
-<!-- SO‘ZLAR -->
-<section id="words" class="page">
- <button class="back" onclick="showPage('home')">⬅ Orqaga</button>
- <h1>📚 Ruscha so‘zlar</h1>
- <p>Bugungi darsdan namunaviy so‘zlar:</p>
- <div class="item"><div class="word">Привет</div>Salom</div>
- <div class="item"><div class="word">Спасибо</div>Rahmat</div>
- <div class="item"><div class="word">Пожалуйста</div>Iltimos</div>
- <div class="item"><div class="word">Дом</div>Uy</div>
- <div class="item"><div class="word">Работа</div>Ish</div>
- <p class="small">Bu hozircha namuna. Katta lug‘at bazasini keyin ulaymiz.</p>
-</section>
-
-<!-- VIDEO -->
-<section id="videos" class="page">
- <button class="back" onclick="showPage('home')">⬅ Orqaga</button>
- <h1>🎬 Qisqa video darslar</h1>
- <p>Har biri 10–15 soniyalik roliklar ketma-ketligi.</p>
- <div class="item">
-  <h3>🎥 1. Salomlashish</h3>
-  <p>Rus tilida salomlashishni o‘rganamiz.</p>
-  <span class="small">3 ta rolik rejalashtirilgan</span>
- </div>
- <div class="item">
-  <h3>🎥 2. Tanishuv</h3>
-  <p>Ism va o‘zingiz haqingizda gapirish.</p>
-  <span class="small">3 ta rolik rejalashtirilgan</span>
- </div>
- <div class="item">
-  <h3>🎥 3. Kundalik suhbat</h3>
-  <p>Oddiy hayotiy suhbatlar.</p>
-  <span class="small">3 ta rolik rejalashtirilgan</span>
- </div>
- <p class="small">Video fayllarini keyingi bosqichda joylaymiz.</p>
-</section>
-
-<!-- TEST -->
-<section id="tests" class="page">
- <button class="back" onclick="showPage('home')">⬅ Orqaga</button>
- <h1>📝 Kichik test</h1>
- <p>«Спасибо» so‘zining tarjimasi nima?</p>
- <div class="item"><button class="full" onclick="check(false)">Salom</button></div>
- <div class="item"><button class="full" onclick="check(true)">Rahmat</button></div>
- <div class="item"><button class="full" onclick="check(false)">Uy</button></div>
- <p id="answer"></p>
-</section>
-
-<!-- YUTUQLAR -->
-<section id="results" class="page">
- <button class="back" onclick="showPage('home')">⬅ Orqaga</button>
- <h1>🏆 Mening natijalarim</h1>
- <div class="item">⭐ To‘plangan ball: 0</div>
- <div class="item">📚 O‘rganilgan so‘zlar: 0</div>
- <div class="item">🔥 Kunlik seriya: 0 kun</div>
- <p class="small">Natijalarni saqlash tizimini keyin qo‘shamiz.</p>
-</section>
+<div class="card">
+<input id="search" placeholder="🔍 So‘z qidirish..." oninput="searchWords()">
+<div id="words"></div>
+<p class="small">🔊 Tugmani bosib ruscha talaffuzni eshiting</p>
+</div>
 
 <script>
-function showPage(id){
- document.querySelectorAll('.page').forEach(
-  page=>page.classList.remove('active')
- );
- document.getElementById(id).classList.add('active');
- window.scrollTo(0,0);
-}
-function check(correct){
- document.getElementById('answer').textContent =
- correct ? '🎉 To‘g‘ri javob! Barakalla!' : '❌ Xato. Yana urinib ko‘ring!';
-}
-</script>
+const data = [
+["Привет","Salom"],
+["Здравствуйте","Assalomu alaykum"],
+["Спасибо","Rahmat"],
+["Пожалуйста","Iltimos"],
+["Да","Ha"],
+["Нет","Yo‘q"],
+["Хорошо","Yaxshi"],
+["Плохо","Yomon"],
+["Дом","Uy"],
+["Школа","Maktab"],
+["Работа","Ish"],
+["Друг","Do‘st"],
+["Семья","Oila"],
+["Мама","Ona"],
+["Папа","Ota"],
+["Брат","Aka yoki uka"],
+["Сестра","Opa yoki singil"],
+["Вода","Suv"],
+["Хлеб","Non"],
+["Молоко","Sut"],
+["Еда","Ovqat"],
+["Книга","Kitob"],
+["Телефон","Telefon"],
+["Машина","Mashina"],
+["Город","Shahar"],
+["Улица","Ko‘cha"],
+["День","Kun"],
+["Ночь","Tun"],
+["Утро","Ertalab"],
+["Вечер","Kechqurun"],
+["Сегодня","Bugun"],
+["Завтра","Ertaga"],
+["Вчера","Kecha"],
+["Любовь","Sevgi"],
+["Жизнь","Hayot"],
+["Счастье","Baxt"],
+["Красивый","Chiroyli"],
+["Большой","Katta"],
+["Маленький","Kichkina"],
+["Новый","Yangi"],
+["Старый","Eski"],
+["Говорить","Gapirmoq"],
+["Слушать","Tinglamoq"],
+["Читать","O‘qimoq"],
+["Писать","Yozmoq"],
+["Учиться","O‘qimoq, ta'lim olmoq"],
+["Работать","Ishlamoq"],
+["Идти","Bormoq"],
+["Любить","Sevmoq"],
+["Понимать","Tushunmoq"]
+];
 
+function speak(word){
+ const msg = new SpeechSynthesisUtterance(word);
+ msg.lang = "ru-RU";
+ msg.rate = 0.85;
+ const voices = speechSynthesis.getVoices();
+ const female = voices.find(v =>
+   v.lang.toLowerCase().startsWith("ru") &&
+   /female|жен|milena|irina/i.test(v.name)
+ );
+ if(female) msg.voice = female;
+ speechSynthesis.cancel();
+ speechSynthesis.speak(msg);
+}
+
+function showWords(list){
+ const box = document.getElementById("words");
+ box.innerHTML = "";
+ list.forEach((item,i)=>{
+  box.innerHTML += 
+   <div class="word">
+    <div>
+     <div class="ru">${i+1}. ${item[0]}</div>
+     <div class="uz">${item[1]}</div>
+    </div>
+    <button onclick="speak('${item[0]}')">🔊</button>
+   </div>;
+ });
+}
+function searchWords(){
+ const q=document.getElementById("search").value.toLowerCase();
+ showWords(data.filter(x =>
+  x[0].toLowerCase().includes(q) ||
+  x[1].toLowerCase().includes(q)
+ ));
+}
+showWords(data);
+</script>
 </body>
 </html>
