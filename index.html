@@ -1,249 +1,510 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LINGUA 50</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f7fbe9;color:#18351d}
-header{background:linear-gradient(120deg,#087b26,#20c943);color:white;padding:20px 16px 24px;border-radius:0 0 30px 30px;box-shadow:0 5px 15px #0002}
-.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.logo{font-size:27px;font-weight:900}
-.logo span{color:#ffe52e}
-.stats{display:flex;gap:7px}
-.stat{background:#075b25aa;padding:9px;border-radius:15px;font-weight:bold;font-size:15px}
-.tagline{font-size:14px;margin-top:5px}
-main{padding:15px 13px 100px}
-.hero{display:flex;align-items:center;gap:8px;margin:12px 0 20px}
-.parrot{font-size:110px;filter:drop-shadow(0 8px 5px #0002);flex:1;text-align:center}
-.speech{background:white;border-radius:22px;padding:15px;box-shadow:0 4px 12px #0002;flex:1.2;font-size:17px;line-height:1.4}
-.speech strong{font-size:21px}
-.start{border:0;background:#12b832;color:white;padding:12px 16px;border-radius:25px;font-weight:bold;font-size:15px;margin-top:10px;box-shadow:0 4px 0 #087c25}
-.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tile{border:0;border-radius:25px;min-height:155px;color:white;padding:14px 8px;box-shadow:0 6px 0 #0002;cursor:pointer}
-.tile .emoji{font-size:53px;display:block;margin-bottom:7px}
-.tile b{font-size:20px;display:block}
-.tile small{font-size:13px;display:block;margin-top:5px}
-.home{background:linear-gradient(145deg,#62e91d,#08a72d)}
-.words{background:linear-gradient(145deg,#20caff,#0879db)}
-.test{background:linear-gradient(145deg,#bd65ff,#7025d9)}
-.results{background:linear-gradient(145deg,#ffd342,#ed8700)}
-.panel{background:#fffdf1;border:2px solid #f0e9c6;border-radius:23px;padding:15px;margin-top:16px;box-shadow:0 3px 8px #0001}
-.panel h3{margin:0 0 9px;font-size:18px}
-.progress{height:13px;background:#dedfce;border-radius:20px;overflow:hidden;margin-top:10px}
-.progress div{height:100%;width:24%;background:#15b936;border-radius:20px}
-.reward{display:flex;justify-content:space-between;align-items:center}
-.reward span{font-size:38px}
-.reward button{border:0;background:#12b832;color:white;padding:10px 18px;border-radius:20px;font-weight:bold}
-.page{display:none}
-.page.active{display:block}
-.back{border:0;background:#dff6df;color:#087b26;padding:10px 15px;border-radius:15px;font-weight:bold;margin-bottom:12px}
-.word{background:white;padding:15px;border-radius:16px;margin:10px 0;box-shadow:0 2px 7px #0001;display:flex;justify-content:space-between;align-items:center}
-.word b{font-size:18px}
-.word small{color:#6b786b}
-.word button{border:0;background:#e5f8e6;border-radius:12px;padding:9px;font-size:18px}
-.question{background:white;padding:18px;border-radius:20px;margin:12px 0}
-.answer{display:block;width:100%;border:2px solid #dcebdc;background:white;padding:13px;border-radius:14px;margin:9px 0;text-align:left;font-size:16px}
-.answer:active{background:#e2f8e3}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -4px 15px #0001;display:flex;justify-content:space-around;padding:10px 4px max(10px,env(safe-area-inset-bottom))}
-.bottom button{border:0;background:none;color:#5c6470;font-size:12px;font-weight:bold;display:flex;flex-direction:column;align-items:center;gap:4px}
-.bottom button span{font-size:25px}
-.bottom button.selected{color:#08a52c}
-.notice{color:#547254;font-size:13px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LINGUA 50 — Duolingo Style</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --border: #e5e7eb;
+      --text: #1f2937;
+      --muted: #6b7280;
+
+      /* Duolingo uslubidagi ranglar + pastki 3D soya ranglari */
+      --green: #58cc02;
+      --green-dark: #46a302;
+
+      --blue: #1cb0f6;
+      --blue-dark: #1485bd;
+
+      --purple: #ce82ff;
+      --purple-dark: #9e47d6;
+
+      --amber: #ffc800;
+      --amber-dark: #d99b00;
+
+      --red: #ff4b4b;
+      --red-dark: #d42c2c;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 88px; /* Pastki menyu ostida qolmasligi uchun */
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 14px 16px 24px;
+    }
+
+    /* Yuqori ixcham status chizig'i */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #f7f9fa;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.3px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+    }
+
+    /* Piko + Nutq pufakchasi */
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .mascot-wrap {
+      flex: 0 0 96px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .mascot {
+      width: 92px;
+      height: 92px;
+      object-fit: contain;
+      animation: pikoFloat 2.8s ease-in-out infinite;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .mascot.bounce {
+      animation: pikoBounce 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes pikoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes pikoBounce {
+      0% { transform: scale(1) translateY(0); }
+      40% { transform: scale(1.08, 0.92) translateY(-8px); }
+      75% { transform: scale(0.96, 1.04) translateY(1px); }
+      100% { transform: scale(1) translateY(0); }
+    }
+
+    .bubble {
+      position: relative;
+      flex: 1;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 3px 0 var(--border);
+    }
+
+    /* Nutq pufakchasi "dumchasi" */
+    .bubble::before {
+      content: "";
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      width: 14px;
+      height: 14px;
+      background: var(--surface);
+      border-left: 2px solid var(--border);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .bubble-title {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .bubble-sub {
+      margin: 0 0 12px;
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    /* Duolingo 3D bosma tugma */
+    .duo-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: none;
+      border-radius: 14px;
+      font-family: inherit;
+      font-weight: 800;
+      color: #ffffff;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
+    }
+   .duo-btn--sm {
+      padding: 9px 14px;
+      font-size: 13.5px;
+      border-radius: 12px;
+    }
+
+    .duo-btn--green {
+      background: var(--green);
+      box-shadow: 0 4px 0 var(--green-dark);
+    }
+
+    .duo-btn--green:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--green-dark);
+    }
+
+    /* 2x2 Duolingo menyu kartochkalari */
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .duo-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 132px;
+      padding: 16px 12px;
+      border: none;
+      border-radius: 20px;
+      color: #ffffff;
+      font-family: inherit;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
+    }
+
+    .duo-card .icon {
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 10px;
+      transition: transform 0.15s ease;
+    }
+
+    .duo-card .card-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .duo-card .card-sub {
+      font-size: 12.5px;
+      font-weight: 600;
+      opacity: 0.94;
+    }
+
+    .duo-card--green {
+      background: var(--green);
+      box-shadow: 0 5px 0 var(--green-dark);
+    }
+    .duo-card--green:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 var(--green-dark);
+    }
+
+    .duo-card--blue {
+      background: var(--blue);
+      box-shadow: 0 5px 0 var(--blue-dark);
+    }
+    .duo-card--blue:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 var(--blue-dark);
+    }
+
+    .duo-card--purple {
+      background: var(--purple);
+      box-shadow: 0 5px 0 var(--purple-dark);
+    }
+    .duo-card--purple:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 var(--purple-dark);
+    }
+
+    .duo-card--amber {
+      background: var(--amber);
+      color: #3b2800;
+      box-shadow: 0 5px 0 var(--amber-dark);
+    }
+    .duo-card--amber:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 var(--amber-dark);
+    }
+
+    /* Maqsad va Progress bar */
+    .goal-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 3px 0 var(--border);
+    }
+
+    .goal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 14px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      border-radius: 999px;
+      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Pastki navigatsiya paneli */
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ffffff;
+      border-top: 2px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+      z-index: 20;
+    }
+
+    .nav-btn {
+      flex: 1;
+      max-width: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 6px 4px;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      background: transparent;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.12s ease, color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .nav-btn .nav-icon {
+      font-size: 20px;
+      line-height: 1;
+      transition: transform 0.15s ease;
+    }
+
+    .nav-btn.is-active {
+      color: var(--blue-dark);
+      background: #e6f7ff;
+      border-color: #90dcff;
+    }
+   .nav-btn:active .nav-icon {
+      transform: translateY(-2px) scale(0.95);
+    }
+  </style>
 </head>
 <body>
-<header>
- <div class="top">
-  <div class="logo">🇷🇺 LINGUA <span>50</span></div>
-  <div class="stats">
-   <div class="stat">⭐ <span id="xp">250</span></div>
-   <div class="stat">❤️ 5</div>
-   <div class="stat">🔥 3</div>
+  <div class="app">
+    <!-- Yuqori panel -->
+    <header class="topbar">
+      <div class="brand">🇷🇺 LINGUA 50</div>
+      <div class="stats">
+        <span class="stat-pill">⭐ <span id="xpVal">250</span></span>
+        <span class="stat-pill">❤️ <span id="hpVal">5</span></span>
+        <span class="stat-pill">🔥 <span id="streakVal">3</span></span>
+      </div>
+    </header>
+
+    <!-- Piko va nutq pufakchasi -->
+    <section class="hero">
+      <div class="mascot-wrap">
+        <!-- O'zingizdagi Piko rasm manzilini qo'ying -->
+        <img
+          id="pikoImg"
+          class="mascot"
+          src="piko.png"
+          alt="Piko"
+        />
+      </div>
+
+      <div class="bubble">
+        <h2 class="bubble-title">Salom! Men Piko!</h2>
+        <p class="bubble-sub">Bugun 50 ta soʻz oʻrganamizmi?</p>
+        <button id="startBtn" class="duo-btn duo-btn--sm duo-btn--green" type="button">
+          Ha, boshlaymiz! ▶
+        </button>
+      </div>
+    </section>
+
+    <!-- 2x2 menyu -->
+    <section class="grid-2x2">
+      <button class="duo-card duo-card--green" data-tab="home" type="button">
+        <span class="icon">🏠</span>
+        <span class="card-title">Bosh sahifa</span>
+        <span class="card-sub">Asosiy sahifa</span>
+      </button>
+
+      <button class="duo-card duo-card--blue" data-tab="words" type="button">
+        <span class="icon">📖</span>
+        <span class="card-title">Soʻzlar</span>
+        <span class="card-sub">50 ta yangi soʻz</span>
+      </button>
+
+      <button class="duo-card duo-card--purple" data-tab="quiz" type="button">
+        <span class="icon">📝</span>
+        <span class="card-title">Test</span>
+        <span class="card-sub">Bilimingni sinab koʻr!</span>
+      </button>
+
+      <button class="duo-card duo-card--amber" data-tab="results" type="button">
+        <span class="icon">🏆</span>
+        <span class="card-title">Natijalar</span>
+        <span class="card-sub">Sening yutuqlaring</span>
+      </button>
+    </section>
+
+    <!-- Bugungi maqsad -->
+    <section class="goal-card">
+      <div class="goal-top">
+        <span>🔥 Ketma-ket kunlar: 3 kun</span>
+        <span id="goalText">12 / 50 soʻz</span>
+      </div>
+      <div class="progress-track">
+        <div id="progressFill" class="progress-fill" style="width: 24%;"></div>
+      </div>
+    </section>
   </div>
- </div>
- <div class="tagline">Rus tilini Piko bilan o‘rganamiz!</div>
-</header>
-<main>
- <section id="homePage" class="page active">
-  <div class="hero">
-   <div class="parrot">🦜</div>
-   <div class="speech">
-    <strong>Salom! Men Piko!</strong><br>
-    Bugun 50 ta so‘z o‘rganamizmi?
-    <br><button class="start" onclick="openWords()">Ha, boshlaymiz! ▶</button>
-   </div>
-  </div>
 
-  <div class="menu">
-   <button class="tile home" onclick="showPage('homePage',0)">
-    <span class="emoji">🏠</span><b>Bosh sahifa</b><small>Asosiy sahifa</small>
-   </button>
-   <button class="tile words" onclick="showPage('wordsPage',1)">
-    <span class="emoji">📖</span><b>So‘zlar</b><small>50 ta yangi so‘z</small>
-   </button>
-   <button class="tile test" onclick="showPage('testPage',2)">
-    <span class="emoji">📝</span><b>Test</b><small>Bilimingni sinab ko‘r!</small>
-   </button>
-   <button class="tile results" onclick="showPage('resultsPage',3)">
-    <span class="emoji">🏆</span><b>Natijalar</b><small>Sening yutuqlaring</small>
-   </button>
-  </div>
+  <!-- Pastki navigatsiya -->
+  <nav class="bottom-nav">
+    <button class="nav-btn is-active" data-tab="home" type="button">
+      <span class="nav-icon">🏠</span>
+      <span>Bosh sahifa</span>
+    </button>
+    <button class="nav-btn" data-tab="words" type="button">
+      <span class="nav-icon">📖</span>
+      <span>Soʻzlar</span>
+    </button>
+    <button class="nav-btn" data-tab="quiz" type="button">
+      <span class="nav-icon">📝</span>
+      <span>Test</span>
+    </button>
+    <button class="nav-btn" data-tab="results" type="button">
+      <span class="nav-icon">🏆</span>
+      <span>Natijalar</span>
+    </button>
+  </nav>
 
-  <div class="panel">
-   <h3>🔥 Ketma-ket kunlar: 3 kun</h3>
-   <b>Bugungi maqsad: 50 ta so‘z</b>
-   <div class="progress"><div id="progressBar"></div></div>
-   <p class="notice" id="progressText">12 / 50 ta so‘z</p>
-  </div>
+  <script>
+    const tg = window.Telegram && window.Telegram.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
 
-  <div class="panel reward">
-   <div><h3>🎁 Bugungi mukofot</h3><b>+50 XP</b></div>
-   <button onclick="claimReward()">Olish</button>
-  </div>
- </section>
+    function vibrate(style = "light") {
+      if (tg && tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred(style);
+      }
+    }
 
- <section id="wordsPage" class="page">
-  <button class="back" onclick="showPage('homePage',0)">← Orqaga</button>
-  <h2>📚 Ruscha so‘zlar</h2>
-  <p>So‘zni eshitish uchun 🔊 tugmasini bosing.</p>
-  <div id="wordList"></div>
- </section>
+    // Piko bosilganda sakrashi
+    const pikoImg = document.getElementById("pikoImg");
+    pikoImg.addEventListener("click", () => {
+      vibrate("medium");
+      pikoImg.classList.remove("bounce");
+      void pikoImg.offsetWidth; // qayta ishga tushirish uchun
+      pikoImg.classList.add("bounce");
+    });
 
- <section id="testPage" class="page">
-  <button class="back" onclick="showPage('homePage',0)">← Orqaga</button>
-  <h2>📝 Bilimingni sinab ko‘r!</h2>
-  <div class="question">
-   <h3 id="questionText">Olma rus tilida qanday?</h3>
-   <div id="answers"></div>
-   <p id="feedback"></p>
-   <button class="start" onclick="nextQuestion()">Keyingi savol →</button>
-  </div>
- </section>
+    // "Ha, boshlaymiz!" tugmasi — progressni sinash uchun misol
+    let learnedWords = 12;
+    const targetWords = 50;
+    const progressFill = document.getElementById("progressFill");
+    const goalText = document.getElementById("goalText");
+    const xpVal = document.getElementById("xpVal");
+   document.getElementById("startBtn").addEventListener("click", () => {
+      vibrate("medium");
+      learnedWords = Math.min(targetWords, learnedWords + 5);
+      const pct = Math.round((learnedWords / targetWords) * 100);
+      progressFill.style.width = pct + "%";
+      goalText.textContent = ${learnedWords} / ${targetWords} soʻz;
+      xpVal.textContent = Number(xpVal.textContent) + 10;
+    });
 
- <section id="resultsPage" class="page">
-  <button class="back" onclick="showPage('homePage',0)">← Orqaga</button>
-  <h2>🏆 Mening natijalarim</h2>
-  <div class="panel">
-   <h3>⭐ Jami tajriba ballari</h3>
-   <h1 id="resultXP">250 XP</h1>
-  </div>
-  <div class="panel">
-   <h3>📚 O‘rganilgan so‘zlar</h3>
-   <h1 id="resultWords">12 ta</h1>
-  </div>
-  <div class="panel">
-   <h3>🔥 Ketma-ket kunlar</h3>
-   <h1>3 kun</h1>
-  </div>
- </section>
-</main>
+    // Tab almashish (2x2 kartochkalar va pastki menyu)
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const cards = document.querySelectorAll(".duo-card");
 
-<nav class="bottom">
- <button class="selected" onclick="showPage('homePage',0)"><span>🏠</span>Bosh sahifa</button>
- <button onclick="showPage('wordsPage',1)"><span>📖</span>So‘zlar</button>
- <button onclick="showPage('testPage',2)"><span>📝</span>Test</button>
- <button onclick="showPage('resultsPage',3)"><span>🏆</span>Natijalar</button>
-</nav>
+    function setActiveTab(tabName) {
+      vibrate("light");
+      navButtons.forEach((btn) => {
+        btn.classList.toggle("is-active", btn.dataset.tab === tabName);
+      });
+      // Bu yerda o'zingizning sahifa/bo'lim ko'rsatish funksiyangizni chaqiring
+      console.log("Tanlangan bo'lim:", tabName);
+    }
 
-<script>
-const tg=window.Telegram?.WebApp;
-if(tg){tg.ready();tg.expand();}
+    cards.forEach((card) => {
+      card.addEventListener("click", () => setActiveTab(card.dataset.tab));
+    });
 
-const words=[
- ["Привет","Salom"],["Спасибо","Rahmat"],["Пожалуйста","Iltimos"],["Да","Ha"],["Нет","Yo‘q"],
- ["Дом","Uy"],["Школа","Maktab"],["Книга","Kitob"],["Вода","Suv"],["Хлеб","Non"],
- ["Молоко","Sut"],["Яблоко","Olma"],["Друг","Do‘st"],["Семья","Oila"],["Мама","Ona"],
- ["Папа","Ota"],["Брат","Aka / uka"],["Сестра","Opa / singil"],["День","Kun"],["Ночь","Tun"],
- ["Утро","Ertalab"],["Вечер","Kechqurun"],["Хорошо","Yaxshi"],["Плохо","Yomon"],["Большой","Katta"],
- ["Маленький","Kichik"],["Красивый","Chiroyli"],["Быстро","Tez"],["Медленно","Sekin"],["Любовь","Sevgi"],
- ["Работа","Ish"],["Город","Shahar"],["Машина","Mashina"],["Улица","Ko‘cha"],["Магазин","Do‘kon"],
- ["Деньги","Pul"],["Время","Vaqt"],["Сегодня","Bugun"],["Завтра","Ertaga"],["Вчера","Kecha"],
- ["Есть","Yemoq"],["Пить","Ichmoq"],["Идти","Bormoq"],["Говорить","Gapirmoq"],["Читать","O‘qimoq"],
- ["Писать","Yozmoq"],["Слушать","Tinglamoq"],["Смотреть","Ko‘rmoq"],["Учиться","O‘rganmoq"],["Понимать","Tushunmoq"]
-];
-  let learned=12;
-let xp=250;
-let rewardTaken=false;
-let q=0;
-let correct=0;
-const questions=[
- {q:"Olma rus tilida qanday?",a:["Дом","Яблоко","Вода"],c:1},
- {q:"«Спасибо» nimani anglatadi?",a:["Rahmat","Salom","Xayr"],c:0},
- {q:"«Вода» tarjimasi nima?",a:["Non","Sut","Suv"],c:2},
- {q:"«Дом» nimani anglatadi?",a:["Uy","Maktab","Kitob"],c:0},
- {q:"«Друг» tarjimasi nima?",a:["Oila","Do‘st","Ota"],c:1}
-];
-
-function showPage(id,index){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('.bottom button').forEach((b,i)=>b.classList.toggle('selected',i===index));
- if(id==='wordsPage')renderWords();
- if(id==='resultsPage')updateResults();
- window.scrollTo(0,0);
-}
-function openWords(){showPage('wordsPage',1);}
-function renderWords(){
- document.getElementById('wordList').innerHTML=words.map(w=>
- <div class="word"><div><b>${w[0]}</b><br><small>${w[1]}</small></div><button onclick="speak('${w[0]}')">🔊</button></div>
- ).join('');
-}
-function speak(word){
- if('speechSynthesis' in window){
-  const u=new SpeechSynthesisUtterance(word);
-  u.lang='ru-RU';
-  speechSynthesis.speak(u);
- }
-}
-function claimReward(){
- if(rewardTaken){alert("Mukofotni allaqachon olding! 😄");return;}
- rewardTaken=true;
- xp+=50;
- document.getElementById('xp').textContent=xp;
- alert("Ajoyib! Piko senga 50 XP berdi! 🦜");
-}
-function updateResults(){
- document.getElementById('resultXP').textContent=xp+" XP";
- document.getElementById('resultWords').textContent=learned+" ta";
-}
-function showQuestion(){
- const item=questions[q];
- document.getElementById('questionText').textContent=item.q;
- document.getElementById('feedback').textContent="";
- document.getElementById('answers').innerHTML=item.a.map((a,i)=>
- <button class="answer" onclick="checkAnswer(${i})">${a}</button>
- ).join('');
-}
-function checkAnswer(i){
- const item=questions[q];
- const buttons=document.querySelectorAll('.answer');
- buttons.forEach((b,j)=>{
-  b.disabled=true;
-  if(j===item.c)b.style.borderColor="#18b83c";
- });
- if(i===item.c){
-  correct++;
-  xp+=10;
-  document.getElementById('xp').textContent=xp;
-  document.getElementById('feedback').textContent="To‘g‘ri! Barakalla! 🦜 +10 XP";
- }else{
-  document.getElementById('feedback').textContent="Voy, adashding! 😄 To‘g‘ri javob: "+item.a[item.c];
- }
-}
-function nextQuestion(){
- q++;
- if(q>=questions.length){
-  alert("Test tugadi! To‘g‘ri javoblar: "+correct+"/"+questions.length+" 🎉");
-  q=0;correct=0;
-  showPage('resultsPage',3);
- }else showQuestion();
-}
-document.getElementById('progressBar').style.width=(learned/50*100)+"%";
-document.getElementById('progressText').textContent=learned+" / 50 ta so‘z";
-showQuestion();
-</script>
+    navButtons.forEach((btn) => {
+      btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
+    });
+  </script>
 </body>
 </html>
