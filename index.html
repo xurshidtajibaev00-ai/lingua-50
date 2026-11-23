@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LINGUA 50</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 22px;
+  font-family: Arial, sans-serif;
+  color: white;
+  background: linear-gradient(145deg,#10152c,#21163b,#10152c);
+}
+header { display:flex; justify-content:space-between; align-items:center; }
+.logo { font-size:25px; font-weight:bold; color:#bca0ff; }
+.profile { background:#30264c; padding:12px; border-radius:50%; }
+h1 { margin-top:35px; font-size:29px; }
+p { color:#b9b8ca; }
+.stats { display:flex; gap:12px; margin:22px 0; }
+.stat {
+  flex:1; padding:17px 10px; border-radius:18px;
+  background:#282542; text-align:center;
+}
+.stat strong { display:block; font-size:23px; color:#80eaff; }
+.stat small { color:#c4bfd5; }
+.card {
+  margin:14px 0; padding:22px; border-radius:22px;
+  background:linear-gradient(120deg,#5138a1,#245d91);
+}
+.card h2 { margin-top:0; }
+button {
+  width:100%; padding:16px; border:0; border-radius:15px;
+  font-size:16px; font-weight:bold; color:white;
+  background:linear-gradient(100deg,#8b5cf6,#19b8d5);
+  cursor:pointer; transition:.2s;
+}
+button:active { transform:scale(.96); }
+.menu { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+.menu button { min-height:105px; background:#30294b; }
+.menu button:hover { background:#514078; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">LINGUA 50 ✨</div>
+  <div class="profile">👤</div>
+</header>
+
+<h1>Привет! 👋</h1>
+<p>Bugun rus tilini birga o‘rganamiz!</p>
+
+<div class="stats">
+  <div class="stat"><strong>🔥 0</strong><small>Kunlik seriya</small></div>
+  <div class="stat"><strong>⭐ 0</strong><small>Ballar</small></div>
+</div>
+
+<div class="card">
+  <h2>📚 Bugungi dars</h2>
+  <p>Yangi 50 ta ruscha so‘zni o‘rganishga tayyormisan?</p>
+  <button onclick="alert('Tez orada darslar boshlanadi!')">Darsni boshlash 🚀</button>
+</div>
+
+<h2>O‘rganish bo‘limlari</h2>
+<div class="menu">
+  <button onclick="alert('So‘zlar bo‘limi')">📚<br>So‘zlar</button>
+  <button onclick="alert('Video darslar bo‘limi')">🎬<br>Video dars</button>
+  <button onclick="alert('Testlar bo‘limi')">📝<br>Testlar</button>
+  <button onclick="alert('Yutuqlar bo‘limi')">🏆<br>Yutuqlar</button>
+</div>
+</body>
+</html>
