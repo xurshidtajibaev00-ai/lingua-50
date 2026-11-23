@@ -6,233 +6,252 @@
 <title>LINGUA 50</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;padding:18px;color:white;
- font-family:Arial,sans-serif;
- background:linear-gradient(140deg,#101329,#21164a,#101329);
-}
-header{text-align:center;padding:15px}
-h1{color:#b69aff;margin-bottom:5px}
-header p{color:#c9c4e8}
-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px;margin:auto}
-button{
- border:0;border-radius:12px;padding:13px;
- background:linear-gradient(90deg,#8055ff,#d34bff);
- color:white;font-size:15px;cursor:pointer;
-}
-nav button{font-weight:bold}
-.page{display:none;max-width:600px;margin:20px auto}
-.page.active{display:block}
-.card{
- padding:17px;margin:12px 0;border-radius:17px;
- background:#ffffff12;border:1px solid #ffffff22;
-}
-h2{color:#c3aaff}
-input{
- width:100%;padding:14px;border:0;
- border-radius:12px;font-size:16px;margin:10px 0;
-}
-.word{
- display:flex;align-items:center;
- justify-content:space-between;gap:10px;
- padding:13px 3px;border-bottom:1px solid #ffffff20;
-}
-.ru{font-size:19px;font-weight:bold}
-.uz{color:#c9c4e8;margin-top:5px}
-.audio{min-width:48px}
-.answer{display:block;width:100%;margin:8px 0}
-.small{font-size:13px;color:#aaa}
-.back{background:#393052;margin-bottom:10px}
+body{margin:0;font-family:Arial,sans-serif;background:#f4fff5;color:#244b32}
+header{background:white;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #e5f4e7;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:900;color:#35ad59}
+.stats{display:flex;gap:12px;font-weight:bold}
+.stat{background:#f0faf1;padding:9px 12px;border-radius:14px}
+main{max-width:650px;margin:auto;padding:22px 16px 100px}
+h1{font-size:27px;margin-bottom:6px}
+.sub{color:#77927d;margin-top:0}
+.progress{height:12px;background:#dcefe0;border-radius:20px;overflow:hidden;margin:12px 0 25px}
+.progress div{height:100%;background:#39bd62;width:0%;transition:.4s}
+.card{background:white;border:2px solid #e1f0e3;border-radius:22px;padding:19px;margin:15px 0;box-shadow:0 4px 0 #e3f0e5}
+.lesson{display:flex;align-items:center;gap:15px}
+.circle{width:62px;height:62px;border-radius:50%;background:#40bd64;color:white;display:grid;place-items:center;font-size:27px;flex-shrink:0;box-shadow:0 5px 0 #27934a}
+.lesson h3{margin:0 0 5px}
+.lesson p{margin:0;color:#77927d;font-size:14px}
+button{border:0;cursor:pointer;font-weight:bold;font-size:15px;border-radius:15px;padding:14px 18px;background:#39b95e;color:white;box-shadow:0 4px 0 #268d47;transition:.15s}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 #268d47}
+button:disabled{opacity:.5;cursor:not-allowed}
+.full{width:100%;margin-top:12px}
+.secondary{background:#e9f8ec;color:#29934a;box-shadow:none}
+nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:2px solid #e5f2e7;display:flex;justify-content:center;gap:8px;padding:10px 5px;z-index:5}
+nav button{background:transparent;color:#67836d;box-shadow:none;padding:9px 12px;font-size:12px}
+nav button.active{background:#e8f8eb;color:#24994b}
+.word{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #edf3ed}
+.word strong{font-size:19px}
+.word small{display:block;color:#78927e;margin-top:4px}
+.option{display:block;width:100%;background:#f1faf2;color:#285b38;box-shadow:none;border:2px solid #dcefe0;text-align:left;margin:10px 0}
+.option.selected{border-color:#38b85e;background:#e7f8eb}
+#feedback{font-weight:bold;margin:12px 0}
+.hidden{display:none}
+.bigemoji{font-size:65px;text-align:center;margin:10px}
+.video{background:#e8f8eb;border-radius:18px;padding:20px;margin:12px 0;text-align:center}
+footer{text-align:center;color:#92a997;font-size:12px;margin-top:25px}
 </style>
 </head>
 <body>
-
 <header>
-<h1>🚀 LINGUA 50</h1>
-<p>Rus tilini har kuni o‘rganing!</p>
+  <div class="logo">LINGUA 50 💚</div>
+  <div class="stats">
+    <div class="stat">🔥 <span id="streak">1</span></div>
+    <div class="stat">💎 <span id="xp">0</span></div>
+    <div class="stat">❤️ <span id="hearts">5</span></div>
+  </div>
 </header>
 
+<main>
+<section id="home">
+  <h1>Привет! 👋</h1>
+  <p class="sub">Bugun rus tilini o‘rganishni davom ettiramiz!</p>
+  <div class="card">
+    <b>🎯 Kunlik maqsad</b>
+    <p><span id="done">0</span> / 50 ta so‘z o‘rganildi</p>
+    <div class="progress"><div id="bar"></div></div>
+    <small>Har kuni oz-ozdan — katta natija!</small>
+  </div>
+  <h2>🗺️ Darslar yo‘li</h2>
+  <div class="card lesson">
+    <div class="circle">👋</div>
+    <div><h3>1. Salomlashish</h3><p>Привет, здравствуйте, пока...</p></div>
+  </div>
+  <button class="full" onclick="startLesson()">DARSNI BOSHLASH 🚀</button>
+  <div class="card lesson">
+    <div class="circle">👤</div>
+    <div><h3>2. Tanishuv</h3><p>Ism, yosh va tanishish</p></div>
+  </div>
+  <div class="card lesson">
+    <div class="circle">🏠</div>
+    <div><h3>3. Oila va uy</h3><p>Oila a'zolari va uy jihozlari</p></div>
+  </div>
+  <div class="card lesson">
+    <div class="circle">🍎</div>
+    <div><h3>4. Kundalik hayot</h3><p>Ovqat, xarid va kundalik so‘zlar</p></div>
+  </div>
+  <p class="sub">Keyingi darslar bosqichma-bosqich ochiladi.</p>
+</section>
+<section id="lesson" class="hidden">
+  <button class="secondary" onclick="showPage('home')">← Orqaga</button>
+  <h1>🧠 Rus tilini o‘rganamiz</h1>
+  <p class="sub" id="questionNumber"></p>
+  <div class="progress"><div id="quizbar"></div></div>
+  <div class="card">
+    <div class="bigemoji" id="questionEmoji">👋</div>
+    <h2 id="question"></h2>
+    <div id="options"></div>
+    <p id="feedback"></p>
+    <button class="full" id="checkBtn" onclick="checkAnswer()">TEKSHIRISH</button>
+    <button class="full hidden" id="nextBtn" onclick="nextQuestion()">DAVOM ETISH</button>
+  </div>
+</section>
+
+<section id="words" class="hidden">
+  <h1>📚 Ruscha so‘zlar</h1>
+  <p class="sub">So‘zlarni o‘rganing va talaffuzini tinglang.</p>
+  <input id="search" placeholder="So‘z qidirish..." oninput="renderWords()" style="width:100%;padding:14px;border:2px solid #dcefe0;border-radius:14px;font-size:16px">
+  <div class="card" id="wordList"></div>
+</section>
+
+<section id="videos" class="hidden">
+  <h1>🎬 Video darslar</h1>
+  <p class="sub">Rus tilini qisqa videolar orqali o‘rganamiz.</p>
+  <div class="video"><div class="bigemoji">🎥</div><h3>Salomlashish</h3><p>10–15 soniyalik ruscha roliklar</p><small>Videolar joylanishi bilan shu yerda ko‘rinadi.</small></div>
+  <div class="video"><div class="bigemoji">🎭</div><h3>Kundalik suhbatlar</h3><p>Hayotiy vaziyatlar va yangi iboralar</p></div>
+  <div class="video"><div class="bigemoji">🐻</div><h3>Multfilmlar</h3><p>Qisqa lavhalar orqali o‘rganish</p></div>
+</section>
+
+<section id="results" class="hidden">
+  <h1>🏆 Mening natijalarim</h1>
+  <div class="card">
+    <div class="bigemoji">🏅</div>
+    <h2 style="text-align:center">Ajoyib davom et!</h2>
+    <p>Yig‘ilgan XP: <b id="resultXP">0</b></p>
+    <p>O‘rganilgan so‘zlar: <b id="resultWords">0</b></p>
+    <p>To‘g‘ri javoblar: <b id="resultCorrect">0</b></p>
+    <p>Kunlik streak: <b id="resultStreak">1</b> 🔥</p>
+  </div>
+</section>
+<footer>LINGUA 50 • Rus tilini zavq bilan o‘rganing 💚</footer>
+</main>
+
 <nav>
-<button onclick="showPage('words')">📚 50 ta so‘z</button>
-<button onclick="showPage('videos')">🎬 Video dars</button>
-<button onclick="showPage('tests')">📝 Test</button>
-<button onclick="showPage('results')">🏆 Natijalar</button>
+  <button class="active" onclick="showPage('home',this)">🏠<br>Bosh sahifa</button>
+  <button onclick="showPage('words',this)">📚<br>So‘zlar</button>
+  <button onclick="showPage('videos',this)">🎬<br>Videolar</button>
+  <button onclick="showPage('results',this)">🏆<br>Natijalar</button>
 </nav>
-
-<section id="words" class="page active">
-<div class="card">
-<h2>📚 Bugungi 50 ta so‘z</h2>
-<p>Ruscha so‘zni tinglang va tarjimasini o‘rganing.</p>
-<input id="search" placeholder="🔍 So‘z qidirish..." oninput="searchWords()">
-<div id="wordList"></div>
-</div>
-</section>
-
-<section id="videos" class="page">
-<div class="card">
-<h2>🎬 Video darslar</h2>
-<p>Qisqa 10–15 soniyalik roliklar orqali rus tilini o‘rganamiz.</p>
-<div class="card">
-<h3>🎞 Kundalik suhbatlar</h3>
-<p>Salomlashish va tanishish</p>
-<p class="small">Roliklar tayyorlanmoqda.</p>
-</div>
-<div class="card">
-<h3>🎬 Kinolardan lavhalar</h3>
-<p>Qisqa lavhalar va yangi so‘zlar</p>
-<p class="small">Roliklar tayyorlanmoqda.</p>
-</div>
-<div class="card">
-<h3>🐻 Multfilmlar</h3>
-<p>Multfilmlar orqali rus tilini o‘rganish</p>
-<p class="small">Roliklar tayyorlanmoqda.</p>
-</div>
-</div>
-</section>
-
-<section id="tests" class="page">
-<div class="card">
-<h2>📝 Rus tili testi</h2>
-<p id="question">«Спасибо» so‘zining tarjimasi nima?</p>
-<button class="answer" onclick="checkAnswer(this,false)">Salom</button>
-<button class="answer" onclick="checkAnswer(this,true)">Rahmat</button>
-<button class="answer" onclick="checkAnswer(this,false)">Xayr</button>
-<p id="feedback"></p>
-<button onclick="nextQuestion()">Keyingi savol ➜</button>
-</div>
-</section>
-
-<section id="results" class="page">
-<div class="card">
-<h2>🏆 Mening natijalarim</h2>
-<p>To‘g‘ri javoblar: <b id="score">0</b></p>
-<p>O‘tilgan testlar: <b id="done">0</b></p>
-<p>O‘rganilgan so‘zlar: <b>50 ta</b></p>
-</div>
-</section>
 
 <script>
 const words=[
-["Привет","Salom"],["Здравствуйте","Assalomu alaykum"],
-["Спасибо","Rahmat"],["Пожалуйста","Iltimos"],
+["Привет","Salom"],["Здравствуйте","Assalomu alaykum"],["Пока","Xayr"],
+["Спасибо","Rahmat"],["Пожалуйста","Iltimos / Arzimaydi"],
 ["Да","Ha"],["Нет","Yo‘q"],["Хорошо","Yaxshi"],
-["Плохо","Yomon"],["Дом","Uy"],["Школа","Maktab"],
-["Работа","Ish"],["Друг","Do‘st"],["Семья","Oila"],
-["Мама","Ona"],["Папа","Ota"],["Брат","Aka yoki uka"],
-["Сестра","Opa yoki singil"],["Вода","Suv"],
-["Хлеб","Non"],["Молоко","Sut"],["Еда","Ovqat"],
-["Книга","Kitob"],["Телефон","Telefon"],
-["Машина","Mashina"],["Город","Shahar"],
-["Улица","Ko‘cha"],["День","Kun"],["Ночь","Tun"],
- ["Утро","Ertalab"],["Вечер","Kechqurun"],
-["Сегодня","Bugun"],["Завтра","Ertaga"],
-["Вчера","Kecha"],["Любовь","Sevgi"],
-["Жизнь","Hayot"],["Счастье","Baxt"],
-["Красивый","Chiroyli"],["Большой","Katta"],
-["Маленький","Kichkina"],["Новый","Yangi"],
-["Старый","Eski"],["Говорить","Gapirmoq"],
-["Слушать","Tinglamoq"],["Читать","O‘qimoq"],
-["Писать","Yozmoq"],["Учиться","Ta'lim olmoq"],
-["Работать","Ishlamoq"],["Идти","Bormoq"],
-["Любить","Sevmoq"],["Понимать","Tushunmoq"]
+["Плохо","Yomon"],["Как дела?","Ishlaringiz qalay?"],
+["Меня зовут","Mening ismim"],["Друг","Do‘st"],
+["Семья","Oila"],["Мама","Ona"],["Папа","Ota"],
+["Брат","Aka / Uka"],["Сестра","Opa / Singil"],
+["Дом","Uy"],["Школа","Maktab"],["Вода","Suv"],
+["Хлеб","Non"],["Молоко","Sut"],["Я","Men"],
+["Ты","Sen"],["Мы","Biz"],["Он","U (erkak)"],
+["Она","U (ayol)"],["Любовь","Sevgi"],["День","Kun"],
+["Ночь","Tun"],["Сегодня","Bugun"],["Завтра","Ertaga"],
+["Вчера","Kecha"],["Где?","Qayerda?"],["Кто?","Kim?"],
+["Что?","Nima?"],["Почему?","Nega?"],["Когда?","Qachon?"],
+["Город","Shahar"],["Магазин","Do‘kon"],["Работа","Ish"],
+["Книга","Kitob"],["Телефон","Telefon"],["Красивый","Chiroyli"],
+["Большой","Katta"],["Маленький","Kichik"],["Новый","Yangi"],
+["Люблю","Yaxshi ko‘raman"],["Понимаю","Tushunaman"]
 ];
 
-function showPage(id){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(id).classList.add("active");
-}
+let data=JSON.parse(localStorage.getItem("linguaData")||'{"xp":0,"hearts":5,"streak":1,"done":0,"correct":0}');
+let qIndex=0,selected=-1,answered=false;
 
+function save(){
+ localStorage.setItem("linguaData",JSON.stringify(data));
+ update();
+}
+function update(){
+ document.getElementById("xp").textContent=data.xp;
+ document.getElementById("hearts").textContent=data.hearts;
+ document.getElementById("streak").textContent=data.streak;
+ document.getElementById("done").textContent=data.done;
+ document.getElementById("bar").style.width=Math.min(data.done/50*100,100)+"%";
+ document.getElementById("resultXP").textContent=data.xp;
+ document.getElementById("resultWords").textContent=data.done;
+ document.getElementById("resultCorrect").textContent=data.correct;
+ document.getElementById("resultStreak").textContent=data.streak;
+}
+function showPage(id,btn){
+ document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+ else document.querySelectorAll("nav button")[0].classList.add("active");
+ if(id==="words")renderWords();
+ update();
+ window.scrollTo(0,0);
+}
 function speak(word){
- if(!("speechSynthesis" in window)){
-  alert("Telefoningizda ovozli o‘qish qo‘llab-quvvatlanmaydi.");
-  return;
- }
- speechSynthesis.cancel();
- const msg=new SpeechSynthesisUtterance(word);
- msg.lang="ru-RU";
- msg.rate=0.85;
- const voices=speechSynthesis.getVoices();
- const russian=voices.filter(v=>v.lang.toLowerCase().startsWith("ru"));
- const female=russian.find(v=>/female|жен|milena|irina/i.test(v.name));
- if(female) msg.voice=female;
- else if(russian.length) msg.voice=russian[0];
- speechSynthesis.speak(msg);
+ if(!("speechSynthesis" in window)){alert("Ovoz funksiyasi bu brauzerda ishlamaydi.");return;}
+ let msg=new SpeechSynthesisUtterance(word);
+ msg.lang="ru-RU";msg.rate=.85;
+ speechSynthesis.cancel();speechSynthesis.speak(msg);
 }
-
-function renderWords(list){
- const box=document.getElementById("wordList");
- box.innerHTML="";
- list.forEach((item)=>{
-  const row=document.createElement("div");
-  row.className="word";
-  const info=document.createElement("div");
-  const ru=document.createElement("div");
-  ru.className="ru";
-  ru.textContent=item[0];
-  const uz=document.createElement("div");
-  uz.className="uz";
-  uz.textContent=item[1];
-  info.append(ru,uz);
-  const btn=document.createElement("button");
-  btn.className="audio";
-  btn.textContent="🔊";
-  btn.onclick=()=>speak(item[0]);
-  row.append(info,btn);
-  box.append(row);
- });
+function renderWords(){
+ let search=document.getElementById("search").value.toLowerCase();
+ document.getElementById("wordList").innerHTML=words.filter(w=>(w[0]+w[1]).toLowerCase().includes(search)).map(w=>
+ <div class="word"><div><strong>${w[0]}</strong><small>${w[1]}</small></div><button class="secondary" onclick="speak('${w[0]}')">🔊</button></div>
+ ).join("");
 }
-
-function searchWords(){
- const q=document.getElementById("search").value.toLowerCase().trim();
- renderWords(words.filter(w=>
-  w[0].toLowerCase().includes(q)||
-  w[1].toLowerCase().includes(q)
- ));
-}
-
-let score=0;
-let done=0;
-let current=0;
 const questions=[
-{q:"«Спасибо» so‘zining tarjimasi nima?",a:["Salom","Rahmat","Xayr"],correct:1},
-{q:"«Дом» so‘zining tarjimasi nima?",a:["Uy","Suv","Kitob"],correct:0},
-{q:"«Вода» so‘zining tarjimasi nima?",a:["Non","Suv","Ona"],correct:1},
-{q:"«Друг» so‘zining tarjimasi nima?",a:["Do‘st","Ota","Ish"],correct:0},
-{q:"«Любовь» so‘zining tarjimasi nima?",a:["Baxt","Hayot","Sevgi"],correct:2}
+ {e:"👋",q:"«Привет» so‘zining tarjimasi nima?",a:["Salom","Rahmat","Xayr"],correct:0},
+ {e:"🙏",q:"«Спасибо» nimani anglatadi?",a:["Iltimos","Rahmat","Yaxshi"],correct:1},
+ {e:"👋",q:"«Пока» so‘zining tarjimasi nima?",a:["Salom","Xayr","Ha"],correct:1},
+ {e:"💧",q:"«Вода» nimani anglatadi?",a:["Suv","Non","Sut"],correct:0},
+ {e:"❤️",q:"«Любовь» so‘zining tarjimasi nima?",a:["Do‘st","Oila","Sevgi"],correct:2}
 ];
-
-function loadQuestion(){
- const q=questions[current];
+function startLesson(){
+ if(data.hearts<=0){alert("Yuraklaringiz tugadi. Keyinroq qayta urinib ko‘ring!");return;}
+ qIndex=0;showPage("lesson");renderQuestion();
+}
+function renderQuestion(){
+ let q=questions[qIndex];selected=-1;answered=false;
+ document.getElementById("questionNumber").textContent=Savol ${qIndex+1} / ${questions.length};
+ document.getElementById("quizbar").style.width=(qIndex/questions.length*100)+"%";
+ document.getElementById("questionEmoji").textContent=q.e;
  document.getElementById("question").textContent=q.q;
- const buttons=document.querySelectorAll(".answer");
- buttons.forEach((b,i)=>{
-  b.textContent=q.a[i];
-  b.disabled=false;
- });
  document.getElementById("feedback").textContent="";
+ document.getElementById("checkBtn").classList.remove("hidden");
+ document.getElementById("nextBtn").classList.add("hidden");
+ document.getElementById("options").innerHTML=q.a.map((a,i)=>
+ <button class="option" onclick="choose(${i},this)">${a}</button>).join("");
 }
-
-function checkAnswer(btn,correct){
- if(document.querySelector(".answer:disabled"))return;
- done++;
- if(correct){
-  score++;
-  document.getElementById("feedback").textContent="✅ To‘g‘ri javob!";
+function choose(i,btn){
+ if(answered)return;
+ selected=i;
+ document.querySelectorAll(".option").forEach(b=>b.classList.remove("selected"));
+ btn.classList.add("selected");
+}
+function checkAnswer(){
+ if(selected<0){document.getElementById("feedback").textContent="Avval javobni tanlang!";return;}
+ answered=true;
+ let q=questions[qIndex];
+ if(selected===q.correct){
+ data.xp+=10;data.correct++;
+ document.getElementById("feedback").textContent="Ajoyib! To‘g‘ri javob! 🎉";
+ document.getElementById("feedback").style.color="#29994c";
  }else{
-  document.getElementById("feedback").textContent="❌ Noto‘g‘ri javob. Keyingisini sinab ko‘ring!";
+ data.hearts=Math.max(0,data.hearts-1);
+ document.getElementById("feedback").textContent="Bu safar xato. To‘g‘ri javob: "+q.a[q.correct];
+ document.getElementById("feedback").style.color="#d45a50";
  }
- document.querySelectorAll(".answer").forEach(b=>b.disabled=true);
- document.getElementById("score").textContent=score;
- document.getElementById("done").textContent=done;
+ document.querySelectorAll(".option").forEach((b,i)=>{
+ if(i===q.correct)b.style.borderColor="#39b95e";
+ });
+ document.getElementById("checkBtn").classList.add("hidden");
+ document.getElementById("nextBtn").classList.remove("hidden");
+ save();
 }
-
 function nextQuestion(){
- current=(current+1)%questions.length;
- loadQuestion();
+ if(qIndex<questions.length-1){qIndex++;renderQuestion();}
+ else{
+ data.done=Math.min(50,data.done+5);save();
+ alert("Dars tugadi! Zo‘r ishladingiz! ⭐");
+ showPage("home");
+ }
 }
-
-renderWords(words);
-loadQuestion();
+update();
 </script>
 </body>
 </html>
