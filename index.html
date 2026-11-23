@@ -2,72 +2,148 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LINGUA 50</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  padding: 22px;
-  font-family: Arial, sans-serif;
-  color: white;
-  background: linear-gradient(145deg,#10152c,#21163b,#10152c);
+*{box-sizing:border-box}
+body{
+ margin:0;padding:20px;
+ background:linear-gradient(145deg,#10152c,#211638);
+ color:white;font-family:Arial,sans-serif;
 }
-header { display:flex; justify-content:space-between; align-items:center; }
-.logo { font-size:25px; font-weight:bold; color:#bca0ff; }
-.profile { background:#30264c; padding:12px; border-radius:50%; }
-h1 { margin-top:35px; font-size:29px; }
-p { color:#b9b8ca; }
-.stats { display:flex; gap:12px; margin:22px 0; }
-.stat {
-  flex:1; padding:17px 10px; border-radius:18px;
-  background:#282542; text-align:center;
+header{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:bold;color:#c4a4ff}
+h1{margin-top:35px}
+p{color:#c2bfd1;line-height:1.5}
+.stats{display:flex;gap:10px;margin:20px 0}
+.stat,.card{
+ background:#292541;border-radius:18px;padding:17px;
 }
-.stat strong { display:block; font-size:23px; color:#80eaff; }
-.stat small { color:#c4bfd5; }
-.card {
-  margin:14px 0; padding:22px; border-radius:22px;
-  background:linear-gradient(120deg,#5138a1,#245d91);
+.stat{flex:1;text-align:center}
+.stat strong{display:block;font-size:23px;color:#71e5ff}
+.card{margin:14px 0}
+.hero{background:linear-gradient(120deg,#5935a5,#176a91)}
+button{
+ border:0;border-radius:14px;padding:15px;
+ color:white;font-size:15px;font-weight:bold;
+ background:linear-gradient(100deg,#8956f5,#16b9d3);
+ cursor:pointer;transition:.2s;
 }
-.card h2 { margin-top:0; }
-button {
-  width:100%; padding:16px; border:0; border-radius:15px;
-  font-size:16px; font-weight:bold; color:white;
-  background:linear-gradient(100deg,#8b5cf6,#19b8d5);
-  cursor:pointer; transition:.2s;
-}
-button:active { transform:scale(.96); }
-.menu { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
-.menu button { min-height:105px; background:#30294b; }
-.menu button:hover { background:#514078; }
+button:active{transform:scale(.96)}
+.full{width:100%}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.menu button{min-height:105px;background:#332b50}
+.menu button:hover{background:#59417f}
+.page{display:none}
+.page.active{display:block}
+.back{margin:20px 0;background:#39334f}
+.item{background:#292541;padding:16px;border-radius:15px;margin:12px 0}
+.word{font-size:22px;font-weight:bold;color:#82e8ff}
+.small{font-size:13px;color:#bbb}
 </style>
 </head>
 <body>
+
 <header>
-  <div class="logo">LINGUA 50 ✨</div>
-  <div class="profile">👤</div>
+ <div class="logo">LINGUA 50 ✨</div>
+ <div>👤</div>
 </header>
 
-<h1>Привет! 👋</h1>
-<p>Bugun rus tilini birga o‘rganamiz!</p>
+<!-- BOSH SAHIFA -->
+<section id="home" class="page active">
+ <h1>Привет! 👋</h1>
+ <p>Rus tilini biz bilan oson o‘rganing!</p>
 
-<div class="stats">
+ <div class="stats">
   <div class="stat"><strong>🔥 0</strong><small>Kunlik seriya</small></div>
   <div class="stat"><strong>⭐ 0</strong><small>Ballar</small></div>
-</div>
+ </div>
 
-<div class="card">
+ <div class="card hero">
   <h2>📚 Bugungi dars</h2>
-  <p>Yangi 50 ta ruscha so‘zni o‘rganishga tayyormisan?</p>
-  <button onclick="alert('Tez orada darslar boshlanadi!')">Darsni boshlash 🚀</button>
-</div>
+  <p>Bugun 50 ta yangi so‘z o‘rganishga tayyormisiz?</p>
+  <button class="full" onclick="showPage('words')">Darsni boshlash 🚀</button>
+ </div>
 
-<h2>O‘rganish bo‘limlari</h2>
-<div class="menu">
-  <button onclick="alert('So‘zlar bo‘limi')">📚<br>So‘zlar</button>
-  <button onclick="alert('Video darslar bo‘limi')">🎬<br>Video dars</button>
-  <button onclick="alert('Testlar bo‘limi')">📝<br>Testlar</button>
-  <button onclick="alert('Yutuqlar bo‘limi')">🏆<br>Yutuqlar</button>
-</div>
+ <h2>O‘rganish bo‘limlari</h2>
+ <div class="menu">
+  <button onclick="showPage('words')">📚<br>So‘zlar</button>
+  <button onclick="showPage('videos')">🎬<br>Video dars</button>
+  <button onclick="showPage('tests')">📝<br>Testlar</button>
+  <button onclick="showPage('results')">🏆<br>Yutuqlar</button>
+ </div>
+</section>
+
+<!-- SO‘ZLAR -->
+<section id="words" class="page">
+ <button class="back" onclick="showPage('home')">⬅ Orqaga</button>
+ <h1>📚 Ruscha so‘zlar</h1>
+ <p>Bugungi darsdan namunaviy so‘zlar:</p>
+ <div class="item"><div class="word">Привет</div>Salom</div>
+ <div class="item"><div class="word">Спасибо</div>Rahmat</div>
+ <div class="item"><div class="word">Пожалуйста</div>Iltimos</div>
+ <div class="item"><div class="word">Дом</div>Uy</div>
+ <div class="item"><div class="word">Работа</div>Ish</div>
+ <p class="small">Bu hozircha namuna. Katta lug‘at bazasini keyin ulaymiz.</p>
+</section>
+
+<!-- VIDEO -->
+<section id="videos" class="page">
+ <button class="back" onclick="showPage('home')">⬅ Orqaga</button>
+ <h1>🎬 Qisqa video darslar</h1>
+ <p>Har biri 10–15 soniyalik roliklar ketma-ketligi.</p>
+ <div class="item">
+  <h3>🎥 1. Salomlashish</h3>
+  <p>Rus tilida salomlashishni o‘rganamiz.</p>
+  <span class="small">3 ta rolik rejalashtirilgan</span>
+ </div>
+ <div class="item">
+  <h3>🎥 2. Tanishuv</h3>
+  <p>Ism va o‘zingiz haqingizda gapirish.</p>
+  <span class="small">3 ta rolik rejalashtirilgan</span>
+ </div>
+ <div class="item">
+  <h3>🎥 3. Kundalik suhbat</h3>
+  <p>Oddiy hayotiy suhbatlar.</p>
+  <span class="small">3 ta rolik rejalashtirilgan</span>
+ </div>
+ <p class="small">Video fayllarini keyingi bosqichda joylaymiz.</p>
+</section>
+
+<!-- TEST -->
+<section id="tests" class="page">
+ <button class="back" onclick="showPage('home')">⬅ Orqaga</button>
+ <h1>📝 Kichik test</h1>
+ <p>«Спасибо» so‘zining tarjimasi nima?</p>
+ <div class="item"><button class="full" onclick="check(false)">Salom</button></div>
+ <div class="item"><button class="full" onclick="check(true)">Rahmat</button></div>
+ <div class="item"><button class="full" onclick="check(false)">Uy</button></div>
+ <p id="answer"></p>
+</section>
+
+<!-- YUTUQLAR -->
+<section id="results" class="page">
+ <button class="back" onclick="showPage('home')">⬅ Orqaga</button>
+ <h1>🏆 Mening natijalarim</h1>
+ <div class="item">⭐ To‘plangan ball: 0</div>
+ <div class="item">📚 O‘rganilgan so‘zlar: 0</div>
+ <div class="item">🔥 Kunlik seriya: 0 kun</div>
+ <p class="small">Natijalarni saqlash tizimini keyin qo‘shamiz.</p>
+</section>
+
+<script>
+function showPage(id){
+ document.querySelectorAll('.page').forEach(
+  page=>page.classList.remove('active')
+ );
+ document.getElementById(id).classList.add('active');
+ window.scrollTo(0,0);
+}
+function check(correct){
+ document.getElementById('answer').textContent =
+ correct ? '🎉 To‘g‘ri javob! Barakalla!' : '❌ Xato. Yana urinib ko‘ring!';
+}
+</script>
+
 </body>
 </html>
